@@ -121,9 +121,17 @@ fn main() {
   }
 }
 
+fn datafile_paths(path: String) -> Vec<String> {
+  fs::read_dir(path)
+    .unwrap()
+    .map(|path| path.unwrap().path().into_os_string().into_string().unwrap())
+    .into_iter()
+    .filter(|path| !path.contains("INFO"))
+    .collect::<Vec<String>>()
+}
+
 fn parse(dataset_name: &str, parser: Parser) {
-  let paths = fs::read_dir(format!("data/{}", dataset_name)).unwrap().map(|path| path.unwrap().path().into_os_string().into_string().unwrap());
-  for path in paths {
+  for path in datafile_paths(format!("data/{}", dataset_name)) {
     let content = std::fs::read(&path).unwrap();
     for i in 0..(content.len() / parser.bytes_per_record) {
       let offset = i * parser.bytes_per_record;
