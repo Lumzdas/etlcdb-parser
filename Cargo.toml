@@ -1,0 +1,7 @@
+[package]
+name = "japanese-etl-database-parser"
+version = "0.1.0"
+authors = ["Lukas <lukas.kairevicius9@gmail.com>"]
+edition = "2021"
+
+[dependencies]
